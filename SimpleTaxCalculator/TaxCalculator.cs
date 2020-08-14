@@ -12,6 +12,8 @@ namespace SimpleTaxCalculator
         private sbyte [] _tax = { 5, 20, 30 };
         private sbyte[] _suncharge = { 10, 20 };
         private sbyte _heathAndEducationCess = 4;
+        private int[] _ageLimit = { 60, 80 };
+        private int[] _salaryLimit = { 250000, 300000, 500000, 1000000 };
 
         public TaxCalculator(int salary, int age) {
             Salary = salary;
@@ -22,25 +24,20 @@ namespace SimpleTaxCalculator
         {
             int taxAbleIncome = Salary -  50000;
             int fixedTaxPayable = 12500;
-            int ageLowerLimit = 60;
-            int ageUpperLimit = 80;
-            int salaryLowerLimt = 250000;
 
-            if (Age <= ageLowerLimit)
+            if (Age <= _ageLimit[0])
             {
-                return GetTaxpayable(fixedTaxPayable, salaryLowerLimt, taxAbleIncome);
+                return GetTaxpayable(fixedTaxPayable, _salaryLimit[0], taxAbleIncome);
             }
-            else if(Age > ageLowerLimit && Age <= ageUpperLimit)
+            else if(Age > _ageLimit[0] && Age <= _ageLimit[1])
             {
                 fixedTaxPayable -= 2500;
-                salaryLowerLimt += 50000;
-                return GetTaxpayable(fixedTaxPayable, salaryLowerLimt, taxAbleIncome);
+                return GetTaxpayable(fixedTaxPayable, _salaryLimit[1], taxAbleIncome);
             }
             else
             {
-                salaryLowerLimt *= 2;
                 fixedTaxPayable = 0;
-                return GetTaxpayable(fixedTaxPayable, salaryLowerLimt, taxAbleIncome);
+                return GetTaxpayable(fixedTaxPayable, _salaryLimit[2], taxAbleIncome);
             }
         }
 
@@ -48,32 +45,30 @@ namespace SimpleTaxCalculator
         public int GetTaxpayable(int fixedTaxPayable, int salaryLowerLimt, int taxAbleIncome)
         {
             int taxPayable = 0;
-            int salaryMediumLimt = 500000;
-            int salaryUpperLimt = 1000000;
             int rebate = 12500;
 
             if (taxAbleIncome <= salaryLowerLimt)
             {
                 return taxPayable;
             }
-            else if (taxAbleIncome > salaryLowerLimt && taxAbleIncome <= salaryMediumLimt)
+            else if (taxAbleIncome > salaryLowerLimt && taxAbleIncome <= _salaryLimit[2])
             {
                 taxAbleIncome -= salaryLowerLimt;
                 taxPayable = (int)(taxAbleIncome * _tax[0] / 100);
                 taxPayable -= rebate;
             }
-            else if (taxAbleIncome > salaryMediumLimt && taxAbleIncome <= salaryUpperLimt)
+            else if (taxAbleIncome > _salaryLimit[2] && taxAbleIncome <= _salaryLimit[3])
             {
-                    taxAbleIncome -= salaryMediumLimt;
+                    taxAbleIncome -= _salaryLimit[2];
                 
                 taxPayable = (int)(fixedTaxPayable + (taxAbleIncome * _tax[1] / 100));
             }
             else
             {
                 fixedTaxPayable = fixedTaxPayable + 100000;
-                taxAbleIncome -= salaryUpperLimt;
+                taxAbleIncome -= _salaryLimit[3];
                 taxPayable = (int)(fixedTaxPayable + (taxAbleIncome * _tax[2] / 100));
-                taxAbleIncome += salaryUpperLimt;
+                taxAbleIncome += _salaryLimit[3];
             }
             taxPayable += (int)(taxPayable * _heathAndEducationCess / 100);
             if (taxAbleIncome >= 5000000 && taxAbleIncome < 10000000)
