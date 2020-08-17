@@ -14,6 +14,7 @@ namespace SimpleTaxCalculator
 
             TaxCalculator taxCalculator = new TaxCalculator(salary, age);
 
+    
             int totalTax = taxCalculator.CalculateTax();
 
             Console.WriteLine("Total Tax = " + totalTax);

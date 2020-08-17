@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SimpleTaxCalculator
 {
-    class TaxCalculator
+    public class TaxCalculator
     {
         protected int Salary;
         protected int Age;
@@ -22,7 +22,11 @@ namespace SimpleTaxCalculator
 
         public int CalculateTax()
         {
-            int taxAbleIncome = Salary -  50000;
+            if(Salary < 50000)
+            {
+                return 0;
+            }
+            int taxAbleIncome = Salary - 50000;
             int fixedTaxPayable = 12500;
 
             if (Age <= _ageLimit[0])
@@ -74,10 +78,12 @@ namespace SimpleTaxCalculator
             if (taxAbleIncome >= 5000000 && taxAbleIncome < 10000000)
             {
                 taxPayable += (int)(taxPayable * _suncharge[0]);
+                taxPayable /= 10;
             }
             else if(taxPayable >= 10000000)
             {
                 taxPayable += (int)(taxPayable * _suncharge[1]);
+                taxPayable /= 10;
             }
             return Math.Max(taxPayable, 0);
         }
