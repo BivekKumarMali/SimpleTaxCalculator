@@ -15,9 +15,10 @@ namespace SimpleTaxCalculator
         private int[] _ageLimit = { 60, 80 };
         private int[] _salaryLimit = { 250000, 300000, 500000, 1000000 };
 
-        public TaxCalculator(int salary, int age) {
-            Salary = salary;
-            Age = age;
+        public TaxCalculator(int? salary, int? age) {
+
+            Salary = (int)(salary == null ? 0 : salary); ;
+            Age = (int)(age == null ? 0 : age);
         }
 
         public int CalculateTax()
