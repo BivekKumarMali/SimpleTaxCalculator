@@ -26,14 +26,3 @@ SimpleTaxCalculator is a console-based .NET application that calculates tax base
     dotnet run
     ```
 
-## License
-
-(Include information about the project's license here)
-
-## Contact Information
-
-(Provide contact information for the maintainers of the project here)
-
-## Contributing
-
-(Provide instructions for those who wish to contribute to the project here)
